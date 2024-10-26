@@ -1,0 +1,1 @@
+Get-ChildItem * -Include ('*.aux', '*.log', '*.out', '*.thm', '*.toc', '*.bbl', '*.blg', '*.fdb_latexmk', '*.fls', '*.gz', '*.snm', '*.nav', '*.vrb', '_*') -Recurse | Remove-Item

@@ -1,0 +1,159 @@
+\ProvidesPackage{zju-extra}[2024/10/25 v0.1 a beamer template for ZJU]
+
+\newif\ifzju@minted
+\newif\ifzju@fira
+\newif\ifzju@siyuan
+
+\DeclareOption{minted}{%
+  \zju@mintedtrue
+}
+
+\DeclareOption{fira}{%
+  \zju@firatrue
+}
+
+\DeclareOption{siyuan}{%
+  \zju@siyuantrue
+}
+% \ExecuteOptions{minted,fira,siyuan}
+\ProcessOptions\relax
+
+\RequirePackage{ctex}
+\hypersetup{colorlinks,linkcolor=,urlcolor=magenta}
+% \RequirePackage[T1]{fontenc}
+\RequirePackage{xeCJKfntef}
+% other packages
+\RequirePackage{latexsym,amsmath,xcolor,multicol,booktabs,calligra}
+\RequirePackage{graphicx,pstricks,listings,stackengine}
+\RequirePackage{physics, tikz}
+\RequirePackage{float, algorithm2e}
+\RequirePackage[us]{datetime}
+\RequirePackage{caption}
+\usefonttheme[stillsansserifmath]{serif}
+\RequirePackage[bold-style=ISO]{unicode-math}
+
+\newcommand{\zju@fontnotfound}[1]
+  {
+    \PackageWarning{zju-extra}{Font ``#1'' not found, \MessageBreak use default font instead.}
+  }
+
+\ifzju@fira
+  % \setmathfont{Fira Math}
+  \IfFontExistsTF{Fira Math}
+    {\setmathfont{FiraMath-Regular.otf}}
+    {\zju@fontnotfound{Fira Math}}
+  \IfFontExistsTF{Fira Code}
+    {
+      \setmonofont{Fira Code}
+    }
+    {\zju@fontnotfound{Fira Code}}
+  \IfFontExistsTF{FiraGO}
+    {
+      \setmainfont{FiraGO}
+    }
+    {\zju@fontnotfound{FiraGO}}
+\fi
+
+\ifzju@siyuan
+  \IfFontExistsTF{Source Han Sans SC}
+  {
+    \setCJKmainfont{Source Han Sans SC}
+    \setCJKsansfont{Source Han Sans SC}
+  }
+  {
+    \IfFontExistsTF{Noto Sans CJK SC}
+      { 
+        \setCJKmainfont{Noto Sans CJK SC}
+        \setCJKsansfont{Noto Sans CJK SC}
+      }{\zju@fontnotfound{Source Han Sans SC}}
+  }
+\fi
+
+\renewcommand{\footnotesize}{\fontsize{6}{7.2}\selectfont}
+\ifzju@minted 
+  \RequirePackage{minted}
+  \usemintedstyle{autumn}
+  \setminted{
+      fontsize    = \fontsize{8}{9.6}\selectfont,
+      frame       = single,
+      linenos     = true,
+      breaklines  = true,
+      breakanywhere = true,
+      autogobble  = true
+  }
+\fi
+
+% \RequirePackage[shortlabels]{enumitem}
+% defs
+\newcommand{\upcite}[1]{\textsuperscript{\cite{#1}}}
+
+\def\cmd#1{\texttt{\color{red}\fontsize{8}{9.6}\selectfont $\backslash$#1}}
+\def\env#1{\texttt{\color{blue}\fontsize{8}{9.6}\selectfont #1}}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+\definecolor{halfgray}{gray}{0.55}
+
+\lstset{
+    basicstyle=\ttfamily\fontsize{8}{9.6}\selectfont,
+    keywordstyle=\bfseries\color{deepblue},
+    emphstyle=\ttfamily\color{deepred},    % Custom highlighting style
+    stringstyle=\color{deepgreen},
+    numbers=left,
+    numberstyle=\fontsize{7}{8.4}\selectfont\color{halfgray},
+    rulesepcolor=\color{red!20!green!20!blue!20},
+    frame=shadowbox,
+}
+\lstloadlanguages{C,C++,Java,Matlab,Python}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%% YAML syntax highlighting %%%%%%%%%%%%%%%%%
+
+% http://tex.stackexchange.com/questions/152829/how-can-i-highlight-yaml-code-in-a-pretty-way-with-listings
+
+% here is a macro expanding to the name of the language
+% (handy if you decide to change it further down the road)
+\newcommand\YAMLcolonstyle{\color{red}\mdseries}
+\newcommand\YAMLkeystyle{\color{black}\bfseries}
+\newcommand\YAMLvaluestyle{\color{blue}\mdseries}
+
+\makeatletter
+
+\newcommand\language@yaml{yaml}
+
+\expandafter\expandafter\expandafter\lstdefinelanguage
+\expandafter{\language@yaml}
+{
+  keywords={true,false,null,y,n},
+  keywordstyle=\color{darkgray}\bfseries,
+  basicstyle=\linespread{0.9}\footnotesize\lstbasicfont\YAMLkeystyle,                                 % assuming a key comes first
+  sensitive=false,
+  comment=[l]{\#},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\YAMLvaluestyle\ttfamily,
+  moredelim=[l][\color{orange}]{\&},
+  moredelim=[l][\color{magenta}]{*},
+  moredelim=**[il][\YAMLcolonstyle{:}\YAMLvaluestyle]{:},   % switch to value style at :
+  morestring=[b]',
+  morestring=[b]",
+  literate =    {---}{{\ProcessThreeDashes}}3
+                {>}{{\textcolor{red}\textgreater}}1     
+                {|}{{\textcolor{red}\textbar}}1 
+                {\ -\ }{{\mdseries\ -\ }}3,
+}
+
+% switch to key style at EOL
+\lst@AddToHook{EveryLine}{\ifx\lst@language\language@yaml\YAMLkeystyle\fi}
+\makeatother
+
+\newcommand\ProcessThreeDashes{\llap{\color{cyan}\mdseries-{-}-}}
+
+%%%%%%%%%%% YAML syntax highlighting %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\figurename}{Fig}
+\renewcommand{\tablename}{Table}
+
+\graphicspath{ {./imgs/} }
+\SetKwComment{Comment}{/* }{ */}

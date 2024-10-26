@@ -1,0 +1,15 @@
+.vscode/
+*_/
+*.aux
+*.log
+*.out
+*.thm
+*.toc
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.gz
+*.snm
+*.nav
+*.vrb
