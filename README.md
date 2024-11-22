@@ -20,5 +20,11 @@ make -j8
 make clean
 ```
 
+## References
+[HITBeamer](https://github.com/hithesis/HITBeamer)
+
+[ZJU-Beamer-Template](https://github.com/qychen2001/ZJU-Beamer-Template)
+
+
 ## LICENSE
 [LICENSE](./LICENSE)

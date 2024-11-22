@@ -18,16 +18,15 @@
 % \ExecuteOptions{minted,fira,siyuan}
 \ProcessOptions\relax
 
-\RequirePackage{ctex}
+\RequirePackage{ctex} % support chinese
 \hypersetup{colorlinks,linkcolor=,urlcolor=magenta}
 % \RequirePackage[T1]{fontenc}
 \RequirePackage{xeCJKfntef}
 % other packages
 \RequirePackage{latexsym,amsmath,xcolor,multicol,booktabs,calligra}
 \RequirePackage{graphicx,pstricks,listings,stackengine}
-\RequirePackage{physics, tikz}
-\RequirePackage{float, algorithm2e}
-\RequirePackage[us]{datetime}
+\RequirePackage{physics,tikz}
+\RequirePackage{float,algorithm2e}
 \RequirePackage{caption}
 \usefonttheme[stillsansserifmath]{serif}
 \RequirePackage[bold-style=ISO]{unicode-math}
@@ -151,9 +150,6 @@
 
 %%%%%%%%%%% YAML syntax highlighting %%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\renewcommand{\figurename}{Fig}
-\renewcommand{\tablename}{Table}
 
 \graphicspath{ {./imgs/} }
 \SetKwComment{Comment}{/* }{ */}
